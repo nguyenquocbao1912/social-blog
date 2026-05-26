@@ -89,7 +89,7 @@ export default function LoginPage() {
           {/* Form */}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label className="form-label"><Mail size={12} aria-hidden="true" /> Email</label>
+              <label className="form-label"><Mail size={16} aria-hidden="true" /> Email</label>
               <input
                 id="login-email"
                 className="pixel-input"
@@ -102,7 +102,7 @@ export default function LoginPage() {
             </div>
 
             <div className="form-group">
-              <label className="form-label"><Lock size={12} aria-hidden="true" /> Password</label>
+              <label className="form-label"><Lock size={16} aria-hidden="true" /> Password</label>
               <input
                 id="login-password"
                 className="pixel-input"
@@ -124,7 +124,7 @@ export default function LoginPage() {
                 background: "var(--error-bg)",
                 lineHeight: 1.6
               }}>
-                <AlertCircle size={12} aria-hidden="true" /> {error}
+                <AlertCircle size={16} aria-hidden="true" /> {error}
               </div>
             )}
 
@@ -137,12 +137,12 @@ export default function LoginPage() {
             >
               {loading ? (
                 <>
-                  <LoaderCircle size={14} className="spin" aria-hidden="true" />
+                  <LoaderCircle size={16} className="spin" aria-hidden="true" />
                   LOGGING IN...
                 </>
               ) : (
                 <>
-                  <Play size={14} aria-hidden="true" />
+                  <Play size={16} aria-hidden="true" />
                   LOGIN
                 </>
               )}
@@ -161,7 +161,7 @@ export default function LoginPage() {
             alignItems: "center",
             gap: 6
           }}>
-            <Lightbulb size={12} aria-hidden="true" /> Demo: use any registered account
+            <Lightbulb size={16} aria-hidden="true" /> Demo: use any registered account
           </div>
 
           {/* Switch to register */}

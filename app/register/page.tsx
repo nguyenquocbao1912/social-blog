@@ -77,22 +77,22 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group" style={{ flex: 1 }}>
-                <label className="form-label"><User size={12} aria-hidden="true" /> Username</label>
+                <label className="form-label"><User size={16} aria-hidden="true" /> Username</label>
                 <input id="reg-name" className="pixel-input" placeholder="cool_username" value={form.name} onChange={set("name")} />
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <label className="form-label"><Mail size={12} aria-hidden="true" /> Email</label>
+                <label className="form-label"><Mail size={16} aria-hidden="true" /> Email</label>
                 <input id="reg-email" className="pixel-input" type="email" placeholder="you@email.com" value={form.email} onChange={set("email")} />
               </div>
             </div>
 
             <div className="form-row">
               <div className="form-group" style={{ flex: 1 }}>
-                <label className="form-label"><Lock size={12} aria-hidden="true" /> Password</label>
+                <label className="form-label"><Lock size={16} aria-hidden="true" /> Password</label>
                 <input id="reg-password" className="pixel-input" type="password" placeholder="••••••••" value={form.password} onChange={set("password")} />
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <label className="form-label"><Lock size={12} aria-hidden="true" /> Confirm</label>
+                <label className="form-label"><Lock size={16} aria-hidden="true" /> Confirm</label>
                 <input id="reg-confirm" className="pixel-input" type="password" placeholder="••••••••" value={form.confirm} onChange={set("confirm")} />
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function RegisterPage() {
                 color: "var(--red)", fontSize: 10, marginBottom: 12, lineHeight: 1.6,
                 border: "2px solid var(--red)", padding: "8px 10px", background: "var(--error-bg)"
               }}>
-                <AlertCircle size={12} aria-hidden="true" /> {error}
+                <AlertCircle size={16} aria-hidden="true" /> {error}
               </div>
             )}
 
@@ -115,12 +115,12 @@ export default function RegisterPage() {
             >
               {loading ? (
                 <>
-                  <LoaderCircle size={14} className="spin" aria-hidden="true" />
+                  <LoaderCircle size={16} className="spin" aria-hidden="true" />
                   CREATING...
                 </>
               ) : (
                 <>
-                  <Play size={14} aria-hidden="true" />
+                  <Play size={16} aria-hidden="true" />
                   REGISTER NOW
                 </>
               )}

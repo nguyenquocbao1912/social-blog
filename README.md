@@ -55,3 +55,5 @@ Hệ thống được bọc bởi nhiều lớp khiên bảo mật để chống
    - Các API nhạy cảm (Sửa bài, Xóa bài) đều kiểm tra đối chiếu `post.userId === session.user.id` trước khi thực thi lệnh SQL. Không ai có thể xóa hoặc chỉnh sửa dữ liệu của người khác dù biết ID bài viết.
 4. **Cookie Security:** 
    - Cookie phiên làm việc luôn được đánh dấu `HttpOnly`, `SameSite=Lax`, và `Secure` trên môi trường Production để ngăn chặn hoàn toàn tấn công XSS (Đánh cắp Cookie qua Javascript) và hạn chế CSRF.
+
+## Link: https://social-blog-blue.vercel.app
