@@ -1,0 +1,155 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  avatar String?
+  bio String?
+
+  posts Post[]
+  comments Comment[]
+  likes Like[]
+
+  sentFriendships     Friendship[] @relation("sent")
+  receivedFriendships Friendship[] @relation("received")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  conversations1  Conversation[] @relation("conv_user1")
+  conversations2  Conversation[] @relation("conv_user2")
+  messages        Message[]
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  title String
+  content String
+  thumbnail String?
+  published Boolean @default(false)
+
+  author User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  comments Comment[]
+  likes Like[]
+  tags TagOnPost[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  content String
+
+  author User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+
+  parentId Int?
+  parent Comment? @relation("replies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies Comment[] @relation("replies")
+
+  createdAt DateTime @default(now())
+}
+
+model Like {
+  id Int @id @default(autoincrement())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+
+  @@unique([userId, postId])
+}
+
+model Tag {
+  id Int @id @default(autoincrement())
+  name String @unique
+  posrs TagOnPost[]
+}
+
+model TagOnPost {
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+  tag Tag @relation(fields: [tagId], references: [id])
+  tagId Int
+
+  @@id([postId, tagId])
+}
+
+model Friendship {
+  id          Int              @id @default(autoincrement())
+
+  sender      User             @relation("sent", fields: [senderId], references: [id], onDelete: Cascade)
+  senderId    Int
+
+  receiver    User             @relation("received", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId  Int
+
+  status      FriendshipStatus @default(pending)
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@unique([senderId, receiverId])
+}
+
+// Enum trạng thái kết bạn
+enum FriendshipStatus {
+  pending
+  accepted
+  rejected
+}
+
+model Conversation {
+  id           Int       @id @default(autoincrement())
+
+  // 2 người trong cuộc trò chuyện
+  user1        User      @relation("conv_user1", fields: [user1Id], references: [id], onDelete: Cascade)
+  user1Id      Int
+  user2        User      @relation("conv_user2", fields: [user2Id], references: [id], onDelete: Cascade)
+  user2Id      Int
+
+  messages     Message[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Mỗi cặp user chỉ có 1 cuộc trò chuyện
+  @@unique([user1Id, user2Id])
+}
+
+model Message {
+  id             Int          @id @default(autoincrement())
+  content        String
+
+  // Ai gửi
+  sender         User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  senderId       Int
+
+  // Thuộc cuộc trò chuyện nào
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId Int
+
+  // Đã đọc chưa
+  read           Boolean      @default(false)
+
+  createdAt      DateTime     @default(now())
+}
