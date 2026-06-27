@@ -35,8 +35,8 @@ export default function PostCard({
   onRequireLogin: () => void
 }) {
   const isLiked = post.likes?.some(l => l.userId === currentUserId)
-  const { withCooldown } = useActionCooldown(3000);
-  const [ratio, setRatio] = useState<string>('16 / 9');
+  const { withCooldown } = useActionCooldown(3000)
+  const [ratio, setRatio] = useState<string>('16 / 9')
   const [showComments, setShowComments] = useState(false)
   const [comments, setComments] = useState<Comment[]>([])
   const [loadingComments, setLoadingComments] = useState(false)
@@ -110,7 +110,7 @@ export default function PostCard({
         <PixelAvatar user={post.author} className="post-avatar" />
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="post-user">{post.author.name}</div>
-          <div className="post-time">{timeAgo(post.createdAt)} 
+          <div className="post-time">{timeAgo(post.createdAt)}
             {post.published ? <Globe2 size={16} /> : <Lock size={16} />}
           </div>
         </div>
@@ -119,15 +119,12 @@ export default function PostCard({
       <div className="post-body">
         <div className="post-title">{post.title}</div>
         {post.thumbnail && (
-          <div
-            className="post-thumbnail-wrap"
-            style={{ aspectRatio: ratio }}
-          >
+          <div className="post-thumbnail-wrap" style={{ aspectRatio: ratio }}>
             <Image
               src={post.thumbnail}
               alt={`Cover for ${post.title}`}
               fill
-              style={{ objectFit: 'contain' }}
+              style={{ objectFit: 'contain', objectPosition: 'center' }} // <-- Thêm objectPosition vào đây
               sizes="(max-width: 768px) 100vw, 600px"
               priority
               onLoad={(e) => {

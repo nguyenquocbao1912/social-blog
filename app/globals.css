@@ -1768,6 +1768,11 @@ textarea.pixel-input {
   background-image: repeating-linear-gradient(0deg,
       transparent, transparent 3px,
       rgba(0, 0, 0, 0.03) 3px, rgba(0, 0, 0, 0.03) 4px);
+
+  /* Bổ sung 3 dòng này để sửa lỗi căn giữa trên thiết bị cũ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .post-thumbnail-wrap::before {
