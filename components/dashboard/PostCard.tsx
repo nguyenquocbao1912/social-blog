@@ -36,7 +36,8 @@ export default function PostCard({
 }) {
   const isLiked = post.likes?.some(l => l.userId === currentUserId)
   const { withCooldown } = useActionCooldown(3000)
-  const [ratio, setRatio] = useState<string>('16 / 9')
+  const [ratio, setRatio] = useState({ w: 16, h: 9 })
+  const paddingBottom = `${(ratio.h / ratio.w) * 100}%`
   const [showComments, setShowComments] = useState(false)
   const [comments, setComments] = useState<Comment[]>([])
   const [loadingComments, setLoadingComments] = useState(false)
@@ -119,17 +120,26 @@ export default function PostCard({
       <div className="post-body">
         <div className="post-title">{post.title}</div>
         {post.thumbnail && (
-          <div className="post-thumbnail-wrap" style={{ aspectRatio: ratio }}>
+          <div
+            className="post-thumbnail-wrap"
+            style={{
+              aspectRatio: `${ratio.w} / ${ratio.h}`,    // giữ lại cho iOS 15+
+              paddingBottom,                               // fallback cho iOS cũ
+            }}
+          >
             <Image
               src={post.thumbnail}
               alt={`Cover for ${post.title}`}
               fill
-              style={{ objectFit: 'contain', objectPosition: 'center' }} // <-- Thêm objectPosition vào đây
+              style={{
+                objectFit: 'contain',
+                objectPosition: 'center center',           // ← thêm dòng này
+              }}
               sizes="(max-width: 768px) 100vw, 600px"
               priority
               onLoad={(e) => {
                 const img = e.currentTarget;
-                setRatio(`${img.naturalWidth} / ${img.naturalHeight}`);
+                setRatio({ w: img.naturalWidth, h: img.naturalHeight });
               }}
             />
           </div>

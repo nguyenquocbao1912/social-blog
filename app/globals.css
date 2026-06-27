@@ -1761,7 +1761,8 @@ textarea.pixel-input {
 .post-thumbnail-wrap {
   position: relative;
   width: 100%;
-  max-height: 500px;
+  /* Xóa max-height để không conflict với padding-bottom hack */
+  /* max-height: 500px; */
   margin: 10px 0;
   overflow: hidden;
   background: var(--bg3);
@@ -1769,10 +1770,9 @@ textarea.pixel-input {
       transparent, transparent 3px,
       rgba(0, 0, 0, 0.03) 3px, rgba(0, 0, 0, 0.03) 4px);
 
-  /* Bổ sung 3 dòng này để sửa lỗi căn giữa trên thiết bị cũ */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* Padding-bottom hack: height = 0 để aspect ratio
+     được tính từ padding-bottom */
+  height: 0;
 }
 
 .post-thumbnail-wrap::before {
@@ -1782,6 +1782,16 @@ textarea.pixel-input {
   opacity: 0;
   z-index: 1;
   pointer-events: none;
+}
+
+/* Hỗ trợ max-height bằng cách dùng @supports */
+@supports (aspect-ratio: 1) {
+  .post-thumbnail-wrap {
+    height: auto;
+    /* override lại height: 0 */
+    max-height: 500px;
+    /* chỉ apply trên browser support */
+  }
 }
 
 /* ── IMAGE UPLOAD ZONE ───────────────────────────────────────── */
